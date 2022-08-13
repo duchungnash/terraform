@@ -13,25 +13,7 @@ resource "azurerm_user_assigned_identity" "example" {
 
   name = "search-api-ahihi"
 }
-module "vnet" {
-  depends_on = [
-    azurerm_resource_group.rg
-  ]
-  source                  = "../modules/vnet"
-  resource_group_name     = azurerm_resource_group.rg.name
-  resource_group_location = var.rg_location
-  name                    = "vnet1-${var.env}"
-  project                 = var.project
-  environment             = var.environment
-  owner                   = var.owner
-  address_space           = ["10.8.0.0/16"]
-  private_subnet_prefixes = ["10.8.3.0/24"]
-  private_subnet_names    = ["prsub"]
-  public_subnet_names     = ["subneta", ]
-  public_subnet_prefixes  = ["10.8.1.0/24", ]
-  # enable_delegation       = true
-}
-# #name rg_group
+
 module "app_plan" {
   depends_on = [
     azurerm_resource_group.rg, azurerm_user_assigned_identity.example
@@ -88,6 +70,24 @@ module "web_app_container" {
   identity = {
     ids = [azurerm_user_assigned_identity.example.id]
   }
+}
+module "vnet" {
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
+  source                  = "../modules/vnet"
+  resource_group_name     = azurerm_resource_group.rg.name
+  resource_group_location = var.rg_location
+  name                    = "vnet1-${var.env}"
+  project                 = var.project
+  environment             = var.environment
+  owner                   = var.owner
+  address_space           = ["10.8.0.0/16"]
+  private_subnet_prefixes = ["10.8.3.0/24"]
+  private_subnet_names    = ["prsub"]
+  public_subnet_names     = ["subneta", ]
+  public_subnet_prefixes  = ["10.8.1.0/24", ]
+  # enable_delegation       = true
 }
 module "linux-web-app" {
   depends_on = [
