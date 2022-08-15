@@ -201,21 +201,13 @@ module "postgree" {
     backslash_quote = "on",
   }
 }
-resource "azurerm_role_assignment" "example" {
+module "azurerm_role_assignment" {
   depends_on = [
     module.postgree, module.linux-web-app
   ]
+  source = "../modules/role_assignment"
   scope                = module.postgree.server_id
   role_definition_name = "Owner"
   # principal_id         = module.linux-web-app.printical_id.dotnethrmapp-api-${var.env}
-  principal_id = module.linux-web-app.printical_id_0
+   principal_id  = [module.linux-web-app.printical_id_0,module.linux-web-app.printical_id_1, module.web_app_container.printical_id_0]
 }
-# resource "azurerm_role_assignment" "example2" {
-#   depends_on = [
-#     module.postgree, module.linux-web-app
-#   ]
-#   scope                = module.postgree.server_id
-#   role_definition_name = "Owner"
-#   # principal_id         = module.linux-web-app.printical_id.dotnethrmapp-api-${var.env}
-#   principal_id = module.linux-web-app.printical_id_1
-# }
