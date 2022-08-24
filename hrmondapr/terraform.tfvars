@@ -1,6 +1,0 @@
-name        = "duchung"
-project     = "hrmondapr"
-environment = "dev"
-owner       = "hungowner"
-rg_location = "centralus"
-rg_name     = "hrmondapr"

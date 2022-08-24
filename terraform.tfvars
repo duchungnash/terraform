@@ -1,0 +1,6 @@
+project         = "hrmondapr"
+env             = "main-test"
+owner           = "hungowner"
+rg_location     = "centralus"
+rg_name         = "hrmondapr"
+subscription_id = "d227de07-9426-416c-b112-49233e369b61"
